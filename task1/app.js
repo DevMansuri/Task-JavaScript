@@ -1,4 +1,5 @@
 let allProducts = [];
+let currentProducts = [];
 const root = document.querySelector("#root");
 
 // create the header
@@ -23,7 +24,7 @@ function createHeader() {
 
   // Style  the h2
   const h2 = document.createElement("h2");
-  h2.textContent = "The Best Footwear for Every Occasion"; // Subtitle
+  h2.textContent = "The Best Footwear for Every Occasion";
   h2.style.fontSize = "22px";
   h2.style.color = "#2D3E50";
   h2.style.fontWeight = "300";
@@ -80,12 +81,12 @@ function createSearchBar(products) {
   // Add search functionality
   searchButton.addEventListener("click", () => {
     const searchTerm = searchInput.value.trim().toLowerCase();
-    const filteredProducts = products.filter(
+    currentProducts = products.filter(
       (product) => product.title.toLowerCase() === searchTerm
     );
 
-    if (filteredProducts.length > 0) {
-      renderCards(filteredProducts);
+    if (currentProducts.length > 0) {
+      renderCards(currentProducts);
     } else {
       alert("No product found with the given name.");
     }
@@ -111,8 +112,8 @@ function filterProcucts(products) {
   function filterButtons(category) {
     return createFilterButton(category, () => {
       console.log(category);
-      const filtered = products.filter((product) => product.title === category);
-      renderCards(filtered);
+      currentProducts = products.filter((product) => product.title === category);
+      renderCards(currentProducts);
     });
   }
   const category1Button = filterButtons("Nike");
@@ -130,70 +131,59 @@ function filterProcucts(products) {
 
   // Add options to the dropdown
   const defaultOption = document.createElement("option");
-  defaultOption.textContent = "Sort by Price";
+  defaultOption.textContent = "Sort By...";
   defaultOption.value = "";
   sortDropdown.appendChild(defaultOption);
 
+  const priceGroup = document.createElement("optgroup");
+  priceGroup.label = "Sort by Price";
+
   const lowToHighOption = document.createElement("option");
   lowToHighOption.textContent = "Low to High";
-  lowToHighOption.value = "lowToHigh";
-  sortDropdown.appendChild(lowToHighOption);
+  lowToHighOption.value = "priceLowToHigh";
+  priceGroup.appendChild(lowToHighOption);
 
   const highToLowOption = document.createElement("option");
   highToLowOption.textContent = "High to Low";
-  highToLowOption.value = "highToLow";
-  sortDropdown.appendChild(highToLowOption);
+  highToLowOption.value = "priceHighToLow";
+  priceGroup.appendChild(highToLowOption);
 
-  // Add sorting functionality
-  sortDropdown.addEventListener("change", () => {
-    const selectedValue = sortDropdown.value;
+  sortDropdown.appendChild(priceGroup);
 
-    if (selectedValue === "lowToHigh") {
-      const sortedProducts = [...products].sort((a, b) => a.price - b.price);
-      console.log(sortedProducts);
-      renderCards(sortedProducts);
-    } else if (selectedValue === "highToLow") {
-      const sortedProducts = [...products].sort((a, b) => b.price - a.price);
-      renderCards(sortedProducts);
-    }
-  });
-
-  const sortAlphaDropdown = document.createElement("select");
-  sortAlphaDropdown.style.padding = "10px";
-  sortAlphaDropdown.style.fontSize = "16px";
-  sortAlphaDropdown.style.marginLeft = "10px";
-  sortAlphaDropdown.style.borderRadius = "5px";
-  sortAlphaDropdown.style.color = "#2D3E50";
-  sortAlphaDropdown.style.borderColor = "#2D3E50";
-  sortAlphaDropdown.style.fontWeight = "bold";
-
-  const defaultOptionAlpha = document.createElement("option");
-  defaultOptionAlpha.textContent = "Sort by Alphabet";
-  defaultOptionAlpha.value = "";
-  sortAlphaDropdown.appendChild(defaultOptionAlpha);
+  const alphaGroup = document.createElement("optgroup");
+  alphaGroup.label = "Sort by Alphabet";
 
   const aToZOption = document.createElement("option");
   aToZOption.textContent = "A-Z";
-  aToZOption.value = "aToZ";
-  sortAlphaDropdown.appendChild(aToZOption);
+  aToZOption.value = "alphaAToZ";
+  alphaGroup.appendChild(aToZOption);
 
   const zToAOption = document.createElement("option");
   zToAOption.textContent = "Z-A";
-  zToAOption.value = "zToA";
-  sortAlphaDropdown.appendChild(zToAOption);
+  zToAOption.value = "alphaZToA";
+  alphaGroup.appendChild(zToAOption);
 
-  sortAlphaDropdown.addEventListener("change", () => {
-    const selectedValue = sortAlphaDropdown.value;
+  sortDropdown.appendChild(alphaGroup);
 
-    if (selectedValue === "aToZ") {
-      const sortedProducts = [...products].sort((a, b) =>
+  sortDropdown.addEventListener("change", () => {
+    const selectedValue = sortDropdown.value;
+    let sortedProducts = [];
+
+    if (selectedValue === "priceLowToHigh") {
+      sortedProducts = [...currentProducts].sort((a, b) => a.price - b.price);
+    } else if (selectedValue === "priceHighToLow") {
+      sortedProducts = [...currentProducts].sort((a, b) => b.price - a.price);
+    } else if (selectedValue === "alphaAToZ") {
+      sortedProducts = [...currentProducts].sort((a, b) =>
         a.title.localeCompare(b.title)
       );
-      renderCards(sortedProducts);
-    } else if (selectedValue === "zToA") {
-      const sortedProducts = [...products].sort((a, b) =>
+    } else if (selectedValue === "alphaZToA") {
+      sortedProducts = [...currentProducts].sort((a, b) =>
         b.title.localeCompare(a.title)
       );
+    }
+
+    if (sortedProducts.length > 0) {
       renderCards(sortedProducts);
     }
   });
@@ -203,7 +193,7 @@ function filterProcucts(products) {
   container.appendChild(category2Button);
   container.appendChild(category3Button);
   container.appendChild(sortDropdown);
-  container.appendChild(sortAlphaDropdown);
+  container.appendChild(sortDropdown);
 
   root.appendChild(container);
 }
@@ -245,7 +235,6 @@ function createCard(item) {
   card.style.overflow = "hidden";
   card.style.width = "18%";
   card.style.minWidth = "250px";
-  
 
   // Create and style elements
   const img = document.createElement("img");
@@ -255,9 +244,8 @@ function createCard(item) {
   img.style.height = "200px";
   img.style.objectFit = "cover";
 
-  
   const title = document.createElement("h2");
-  title.textContent =`${item.title}` ;
+  title.textContent = `${item.title}`;
   title.style.fontWeight = "bold";
   title.style.fontFamily = "'Poppins', sans-serif";
   title.style.textTransform = "uppercase";
@@ -378,8 +366,9 @@ function fetchData() {
       return response.json();
     })
     .then((data) => {
-      allProducts = data.products; // Store all products in a global variable
-      renderCards(allProducts); // Render all products
+      allProducts = data.products; 
+      currentProducts = [...allProducts];// Store all products in a global variable
+      renderCards(currentProducts); // Render all products
     })
     .catch((error) => console.error("Error fetching data:", error));
 }
