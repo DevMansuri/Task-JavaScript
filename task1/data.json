@@ -139,6 +139,76 @@
       "image": "https://images.pexels.com/photos/13449652/pexels-photo-13449652.jpeg?auto=compress&cs=tinysrgb&w=600",
       "price": 750,
       "quantity" :9
+    },
+    {
+      "title": "Adidas",
+      "description": "This is the description for Product .",
+      "image": "https://images.pexels.com/photos/1619652/pexels-photo-1619652.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "price": 450,
+      "quantity" :0
+    },
+    {
+      "title": "Nike",
+      "description": "This is the description for Product 1.",
+      "image": "https://images.pexels.com/photos/345415/pexels-photo-345415.jpeg?auto=compress&cs=tinysrgb&w=600 ",
+      "price": 250,
+      "quantity" :10
+    },
+    {
+      "title": "Nike",
+      "description": "This is the description for Product .",
+      "image": "https://images.pexels.com/photos/1537671/pexels-photo-1537671.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "price": 300,
+      "quantity" :9
+    },
+    {
+      "title": "Adidas",
+      "description": "This is the description for Product 1.",
+      "image": "https://www.shutterstock.com/image-photo/bangkok-thailand-november-20-2022-600nw-2231903277.jpg ",
+      "price": 600,
+      "quantity" :10
+    },
+    {
+      "title": "Adidas",
+      "description": "This is the description for Product .",
+      "image": "https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/b6b6036a0a2c436ba5543f30348533f8_9366/STEP_N_PACE_SHOES_Black_IQ9157_01_standard.jpg",
+      "price": 450,
+      "quantity" :9
+    },
+    {
+      "title": "Nike",
+      "description": "This is the description for Product .",
+      "image": "https://images.pexels.com/photos/786003/pexels-photo-786003.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "price": 550,
+      "quantity" :9
+    },
+    {
+      "title": "Nike",
+      "description": "This is the description for Product .",
+      "image": "https://images.pexels.com/photos/2404959/pexels-photo-2404959.png?auto=compress&cs=tinysrgb&w=600",
+      "price": 750,
+      "quantity" :9
+    },
+    {
+      "title": "Puma",
+      "description": "This is the description for Product .",
+      "image": "https://images.pexels.com/photos/2882861/pexels-photo-2882861.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "price": 800,
+      "quantity" :9
+    },
+    {
+      "title": "Adidas",
+      "description": "This is the description for Product .",
+      "image": "https://images.pexels.com/photos/1407354/pexels-photo-1407354.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "price": 900,
+      "quantity" :9
+    },
+    {
+      "title": "Nike",
+      "description": "This is the description for Product .",
+      "image": "https://images.pexels.com/photos/13449652/pexels-photo-13449652.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "price": 750,
+      "quantity" :9
     }
 
   ]
