@@ -2,12 +2,27 @@ let allProducts = [];
 let currentProducts = [];
 const root = document.querySelector("#root");
 
+
+
 // create the header
 function createHeader() {
   const header = document.createElement("header");
   const h1 = document.createElement("h1");
   h1.textContent = "Shoe Store"; // web name
 
+  const addProductButton = document.createElement("button")
+  addProductButton.textContent = "Add product"
+  addProductButton.style.padding = "10px 20px";
+  addProductButton.style.fontSize = "16px";
+  addProductButton.style.marginLeft = "20px";
+  addProductButton.style.backgroundColor = "#28a745";
+  addProductButton.style.color = "#fff";
+  addProductButton.style.border = "none";
+  addProductButton.style.borderRadius = "5px";
+  addProductButton.style.cursor = "pointer";
+  addProductButton.addEventListener("click", () => togglePopup(true));
+
+  
   // Style the header
   header.style.marginLeft = "30px";
   header.style.width = "100%";
@@ -35,6 +50,7 @@ function createHeader() {
 
   h1.appendChild(h2);
   header.appendChild(h1);
+  header.appendChild(addProductButton);
   root.appendChild(header);
 }
 
@@ -50,6 +66,204 @@ function applyGlobalStyles() {
   root.style.justifyContent = "center";
   // root.style.padding = "20px";
 }
+
+function createPopupForm() {
+  const popup  = document.createElement("div");
+  popup.id = "popupForm";
+  popup.style.position = "fixed";
+  popup.style.top = "50%";
+  popup.style.left = "50%";
+  popup.style.width = "50%"
+  popup.style.textAlign = "center";
+  popup.style.transform = "translate(-50%, -50%)";
+  popup.style.backgroundColor = "#fff";
+  popup.style.boxShadow = "0 4px 6px rgba(0, 0, 0, 0.1)";
+  popup.style.padding = "20px";
+  popup.style.borderRadius = "8px";
+  popup.style.display = "none";
+  popup.style.zIndex = "1000";
+
+  const form = document.createElement("form");
+
+  const h2 = document.createElement("h2");
+  h2.textContent = "Add New Product";
+  h2.style.marginBottom = "20px";
+
+
+  const titleContainer = document.createElement("div");
+  titleContainer.style.display = "flex";
+  titleContainer.style.justifyContent = "center";
+  titleContainer.style.gap = "5px"; // Space between buttons
+  titleContainer.style.marginTop = "10px";
+
+  const titleLabel = document.createElement("label");
+  titleLabel.textContent = "Title:";
+  titleLabel.style.display = "block";
+
+  const titleInput = document.createElement("input");
+  titleInput.type = "text";
+  titleInput.style.width = "80%";
+  titleInput.style.marginBottom = "15px";
+  titleInput.style.padding = "10px";
+  titleInput.style.border = "1px solid #ccc";
+  titleInput.style.borderRadius = "4px";
+
+  const priceContainer = document.createElement("div");
+  priceContainer.style.display = "flex";
+  priceContainer.style.justifyContent = "center";
+  priceContainer.style.gap = "10px"; // Space between buttons
+  priceContainer.style.marginTop = "10px";
+  
+  const priceLabel = document.createElement("label");
+  priceLabel.textContent = "Price:";
+  priceLabel.style.display = "block";
+
+  const priceInput = document.createElement("input");
+  priceInput.type = "number";
+  priceInput.style.width = "80%";
+  priceInput.style.marginBottom = "15px";
+  priceInput.style.padding = "10px";
+  priceInput.style.border = "1px solid #ccc";
+  priceInput.style.borderRadius = "4px";
+
+  const quantityContainer = document.createElement("div");
+  quantityContainer.style.display = "flex";
+  quantityContainer.style.justifyContent = "center";
+  quantityContainer.style.gap = "10px"; // Space between buttons
+  quantityContainer.style.marginTop = "10px";
+
+  const quantityLabel = document.createElement("label");
+  quantityLabel.textContent = "Qty:";
+  quantityLabel.style.display = "block";
+
+  const quantityInput = document.createElement("input");
+  quantityInput.type = "number";
+  quantityInput.style.width = "80%";
+  quantityInput.style.marginBottom = "10px";
+  quantityInput.style.padding = "10px";
+  quantityInput.style.marginBottom = "20px";
+  quantityInput.style.border = "1px solid #ccc";
+  quantityInput.style.borderRadius = "4px";
+
+  const descContainer = document.createElement("div");
+  descContainer.style.display = "flex";
+  descContainer.style.justifyContent = "center";
+  descContainer.style.gap = "10px"; // Space between buttons
+  descContainer.style.marginTop = "10px";
+
+  const descLabel = document.createElement("label");
+  descLabel.textContent = "desc:";
+  descLabel.style.display = "block";
+
+  const descInput = document.createElement("textarea");
+  descInput.type = "text";
+  descInput.style.width = "80%";
+  descInput.style.marginBottom = "10px";
+  descInput.style.padding = "10px";
+  descInput.style.marginBottom = "20px";
+  descInput.style.border = "1px solid #ccc";
+  descInput.style.borderRadius = "4px";
+
+  const buttonContainer = document.createElement("div");
+  buttonContainer.style.display = "flex";
+  buttonContainer.style.justifyContent = "center";
+  buttonContainer.style.gap = "10px"; 
+  buttonContainer.style.marginTop = "10px";
+
+
+  const submitButton = document.createElement("button");
+  submitButton.type = "submit";
+  submitButton.textContent = "Add Product";
+  submitButton.style.backgroundColor = "#28a745";
+  submitButton.style.color = "#fff";
+  submitButton.style.border = "none";
+  submitButton.style.padding = "10px 20px";
+  submitButton.style.borderRadius = "5px";
+  submitButton.style.cursor = "pointer";
+  submitButton.style.display ="block";
+
+  const closeButton = document.createElement("button");
+  closeButton.textContent = "Close";
+  closeButton.type = "button";
+  closeButton.style.marginLeft = "10px";
+  closeButton.style.backgroundColor = "#dc3545";
+  closeButton.style.color = "#fff";
+  closeButton.style.border = "none";
+  closeButton.style.padding = "10px 20px";
+  closeButton.style.borderRadius = "5px";
+  closeButton.style.cursor = "pointer";
+  closeButton.style.display = "inline";
+    closeButton.addEventListener("click", () => togglePopup(false));
+
+  form.addEventListener("submit", (eve) => {
+    eve.preventDefault();
+
+    const title = titleInput.value.trim();
+    const price =  parseFloat(priceInput.value.trim());
+    const quantity = parseFloat(quantityInput.value.trim());
+    const description = descInput.value.trim(); 
+
+    if (title && price && quantity && description) {
+      const newProduct = {
+        title,
+        price,
+        quantity,
+        description,
+        image: "https://via.placeholder.com/200", 
+      };
+
+      allProducts.push(newProduct);
+      currentProducts = [...allProducts];
+      
+      renderCards(currentProducts);
+
+    titleInput.value = "";
+    priceInput.value = "";
+    quantityInput.value = "";
+    descInput.value = "";
+
+    togglePopup(false);
+    }
+    else {
+      alert("fill in all fields correctly")
+    }
+    
+  })
+
+  titleContainer.appendChild(titleLabel);
+  titleContainer.appendChild(titleInput);
+
+  priceContainer.appendChild(priceLabel);
+  priceContainer.appendChild(priceInput);
+
+  quantityContainer.appendChild(quantityLabel);
+  quantityContainer.appendChild(quantityInput);
+
+  descContainer.appendChild(descLabel);
+  descContainer.appendChild(descInput);
+
+  buttonContainer.appendChild(submitButton);
+  buttonContainer.appendChild(closeButton);
+
+  form.appendChild(h2);
+  form.appendChild(titleContainer);
+  form.appendChild(priceContainer);
+  form.appendChild(quantityContainer);
+  form.appendChild(descContainer);
+  form.appendChild(buttonContainer);
+
+  popup.appendChild(form);
+  document.body.appendChild(popup);
+
+}
+
+function togglePopup(show) {
+  const popup = document.getElementById("popupForm");
+  popup.style.display = show ? "block" : "none";
+}
+
+// Initialize popup form
+createPopupForm();
 
 // Create the search bar
 function createSearchBar(products) {
@@ -82,7 +296,7 @@ function createSearchBar(products) {
   searchButton.addEventListener("click", () => {
     const searchTerm = searchInput.value.trim().toLowerCase();
     currentProducts = products.filter(
-      (product) => product.title.toLowerCase() === searchTerm
+      (product) => product.title.toLowerCase().includes(searchTerm)
     );
 
     if (currentProducts.length > 0) {
@@ -111,8 +325,9 @@ function filterProcucts(products) {
 
   function filterButtons(category) {
     return createFilterButton(category, () => {
-      console.log(category);
-      currentProducts = products.filter((product) => product.title === category);
+      currentProducts = products.filter(
+        (product) => product.title === category
+      );
       renderCards(currentProducts);
     });
   }
@@ -270,7 +485,7 @@ function createCard(item) {
   quantity.textContent =
     item.quantity > 0 ? `Qty: ${item.quantity}` : "Out of Stock";
 
-  const addToCartButton = createAddToCartButton();
+  const addToCartButton = createAddToCartButton(item);
   const { descriptionToggle, description } = createDescriptionToggle(
     item.description
   );
@@ -288,7 +503,7 @@ function createCard(item) {
 }
 
 // Function to create "Add to Cart" button
-function createAddToCartButton() {
+function createAddToCartButton(item) { 
   const button = document.createElement("button");
   button.textContent = "Add to Cart";
   button.style.backgroundColor = "#ff6f61";
@@ -307,6 +522,10 @@ function createAddToCartButton() {
   button.addEventListener("mouseleave", () => {
     button.style.backgroundColor = "#ff6f61";
   });
+
+  button.addEventListener('click',()=> {
+    console.log(item.title);
+  })
 
   return button;
 }
@@ -366,8 +585,8 @@ function fetchData() {
       return response.json();
     })
     .then((data) => {
-      allProducts = data.products; 
-      currentProducts = [...allProducts];// Store all products in a global variable
+      allProducts = data.products;
+      currentProducts = [...allProducts]; // Store all products in a global variable
       renderCards(currentProducts); // Render all products
     })
     .catch((error) => console.error("Error fetching data:", error));
