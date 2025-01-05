@@ -1,34 +1,26 @@
 let allProducts = [];
 let currentProducts = [];
 const root = document.querySelector("#root");
+let currentPage = 1 ;
+const productsPerPage = 10;
+const pagesToShow = 3;
 
 
 
 // create the header
 function createHeader() {
   const header = document.createElement("header");
-  const h1 = document.createElement("h1");
-  h1.textContent = "Shoe Store"; // web name
-
-  const addProductButton = document.createElement("button")
-  addProductButton.textContent = "Add product"
-  addProductButton.style.padding = "10px 20px";
-  addProductButton.style.fontSize = "16px";
-  addProductButton.style.marginLeft = "20px";
-  addProductButton.style.backgroundColor = "#28a745";
-  addProductButton.style.color = "#fff";
-  addProductButton.style.border = "none";
-  addProductButton.style.borderRadius = "5px";
-  addProductButton.style.cursor = "pointer";
-  addProductButton.addEventListener("click", () => togglePopup(true));
-
-  
   // Style the header
+  header.style.display = "flex";
   header.style.marginLeft = "30px";
   header.style.width = "100%";
-  header.style.position = "relative";
+  header.style.padding = "20px";
+  header.style.alignItems= "center";
+  header.style.justifyContent = "space-between";
 
+  const h1 = document.createElement("h1");
   // Style the h1
+  h1.textContent = "Shoe Store"; // web name
   h1.style.fontSize = "48px";
   h1.style.color = "#2D3E50";
   h1.style.fontWeight = "bold";
@@ -42,11 +34,23 @@ function createHeader() {
   h2.textContent = "The Best Footwear for Every Occasion";
   h2.style.fontSize = "22px";
   h2.style.color = "#2D3E50";
-  h2.style.fontWeight = "300";
+  h2.style.fontWeight = "bold";
   h2.style.fontFamily = "'Poppins', sans-serif";
   h2.style.marginTop = "10px";
   h2.style.textTransform = "capitalize";
   h2.style.letterSpacing = "2px";
+
+  const addProductButton = document.createElement("button")
+  addProductButton.textContent = "Add product"
+  addProductButton.style.padding = "10px 20px";
+  addProductButton.style.fontSize = "16px";
+  // addProductButton.style.marginLeft = "20px";
+  addProductButton.style.backgroundColor = "#2D3E50";
+  addProductButton.style.color = "#fff";
+  addProductButton.style.border = "none";
+  addProductButton.style.borderRadius = "5px";
+  addProductButton.style.cursor = "pointer";
+  addProductButton.addEventListener("click", () => togglePopup(true));
 
   h1.appendChild(h2);
   header.appendChild(h1);
@@ -88,6 +92,12 @@ function createPopupForm() {
   const h2 = document.createElement("h2");
   h2.textContent = "Add New Product";
   h2.style.marginBottom = "20px";
+  h2.style.fontSize = "40px";
+  h2.style.color = "#2D3E50";
+  h2.style.fontWeight = "300";
+  h2.style.fontFamily = "'Poppins', sans-serif";
+  h2.style.textTransform = "capitalize";
+  h2.style.letterSpacing = "1.5px";
 
 
   const titleContainer = document.createElement("div");
@@ -97,14 +107,15 @@ function createPopupForm() {
   titleContainer.style.marginTop = "10px";
 
   const titleLabel = document.createElement("label");
-  titleLabel.textContent = "Title:";
+  titleLabel.textContent = "Title :";
   titleLabel.style.display = "block";
+  titleLabel.style.padding = "10px";
 
   const titleInput = document.createElement("input");
   titleInput.type = "text";
   titleInput.style.width = "80%";
   titleInput.style.marginBottom = "15px";
-  titleInput.style.padding = "10px";
+  titleInput.style.padding = "15px";
   titleInput.style.border = "1px solid #ccc";
   titleInput.style.borderRadius = "4px";
 
@@ -115,14 +126,15 @@ function createPopupForm() {
   priceContainer.style.marginTop = "10px";
   
   const priceLabel = document.createElement("label");
-  priceLabel.textContent = "Price:";
+  priceLabel.textContent = "Price :";
   priceLabel.style.display = "block";
+  priceLabel.style.padding = "5px";
 
   const priceInput = document.createElement("input");
-  priceInput.type = "number";
+  priceInput.type = "text";
   priceInput.style.width = "80%";
   priceInput.style.marginBottom = "15px";
-  priceInput.style.padding = "10px";
+  priceInput.style.padding = "15px";
   priceInput.style.border = "1px solid #ccc";
   priceInput.style.borderRadius = "4px";
 
@@ -133,14 +145,15 @@ function createPopupForm() {
   quantityContainer.style.marginTop = "10px";
 
   const quantityLabel = document.createElement("label");
-  quantityLabel.textContent = "Qty:";
+  quantityLabel.textContent = "Qty :";
   quantityLabel.style.display = "block";
+  quantityLabel.style.padding = "12.5px";
 
   const quantityInput = document.createElement("input");
   quantityInput.type = "number";
   quantityInput.style.width = "80%";
   quantityInput.style.marginBottom = "10px";
-  quantityInput.style.padding = "10px";
+  quantityInput.style.padding = "15px";
   quantityInput.style.marginBottom = "20px";
   quantityInput.style.border = "1px solid #ccc";
   quantityInput.style.borderRadius = "4px";
@@ -154,12 +167,13 @@ function createPopupForm() {
   const descLabel = document.createElement("label");
   descLabel.textContent = "desc:";
   descLabel.style.display = "block";
+  descLabel.style.padding = "12.5px";
 
   const descInput = document.createElement("textarea");
   descInput.type = "text";
   descInput.style.width = "80%";
   descInput.style.marginBottom = "10px";
-  descInput.style.padding = "10px";
+  descInput.style.padding = "15px";
   descInput.style.marginBottom = "20px";
   descInput.style.border = "1px solid #ccc";
   descInput.style.borderRadius = "4px";
@@ -174,7 +188,7 @@ function createPopupForm() {
   const submitButton = document.createElement("button");
   submitButton.type = "submit";
   submitButton.textContent = "Add Product";
-  submitButton.style.backgroundColor = "#28a745";
+  submitButton.style.backgroundColor = "#ff6f61";
   submitButton.style.color = "#fff";
   submitButton.style.border = "none";
   submitButton.style.padding = "10px 20px";
@@ -186,7 +200,7 @@ function createPopupForm() {
   closeButton.textContent = "Close";
   closeButton.type = "button";
   closeButton.style.marginLeft = "10px";
-  closeButton.style.backgroundColor = "#dc3545";
+  closeButton.style.backgroundColor = "#2D3E50";
   closeButton.style.color = "#fff";
   closeButton.style.border = "none";
   closeButton.style.padding = "10px 20px";
@@ -487,7 +501,7 @@ function createCard(item) {
 
   const addToCartButton = createAddToCartButton(item);
   const { descriptionToggle, description } = createDescriptionToggle(
-    item.description
+    item.description,img
   );
 
   // Append elements to card
@@ -531,7 +545,7 @@ function createAddToCartButton(item) {
 }
 
 // Function to create description toggle
-function createDescriptionToggle(descriptionText) {
+function createDescriptionToggle(descriptionText,img) {
   const descriptionToggle = document.createElement("button");
   descriptionToggle.textContent = "DES ▼";
   descriptionToggle.style.backgroundColor = "#f4f4f4";
@@ -554,9 +568,11 @@ function createDescriptionToggle(descriptionText) {
     if (description.style.display === "none") {
       description.style.display = "block";
       descriptionToggle.textContent = "DES ▲";
+      img.style.height = "150px";
     } else {
       description.style.display = "none";
       descriptionToggle.textContent = "DES ▼";
+      img.style.height = "200px";
     }
   });
 
@@ -573,10 +589,129 @@ function renderCards(products) {
   createSearchBar(allProducts); // Pass all products for search functionality
   filterProcucts(allProducts); // Pass all products for filtering
 
-  products.forEach((item) => {
+  const startIndex = (currentPage-1) * productsPerPage;
+  const endIndex = startIndex + productsPerPage ;
+  const paginatedProducts = products.slice(startIndex,endIndex); 
+  
+  paginatedProducts.forEach((item) => {
     const card = createCard(item);
     root.appendChild(card);
   });
+
+  const totalPages = Math.ceil(products.length / productsPerPage);
+  createPagination(totalPages);
+  
+}
+
+// Function to create the page navigation
+function createPagination(totalPages) {
+  const paginationContainer = document.createElement("div");
+ paginationContainer.style.textAlign = "center";
+  paginationContainer.style.margin = "20px 0";
+  paginationContainer.style.display = "flex";
+  paginationContainer.style.justifyContent = "center";
+  paginationContainer.style.alignItems = "center";
+  paginationContainer.style.gap = "10px"; // Space between buttons
+
+
+  // Calculate the start and end page numbers to display
+  let startPage = Math.max(1, currentPage - Math.floor(pagesToShow / 2));
+  let endPage = Math.min(totalPages, startPage + pagesToShow - 1);
+
+  // Adjust the range if we are near the start or end
+  if (endPage - startPage + 1 < pagesToShow) {
+    startPage = Math.max(1, endPage - pagesToShow + 1);
+  }
+
+  // Add previous page button
+  const prevButton = document.createElement("button");
+  prevButton.innerHTML = "&#8592;"; // Left arrow character (←)
+  prevButton.style.fontSize = "20px";
+  prevButton.style.marginRight = "10px";
+  prevButton.style.padding = "10px 15px";
+  prevButton.style.fontWeight = "bold";
+  prevButton.style.backgroundColor = "#2D3E50";
+  prevButton.style.color = "#fff";
+  prevButton.style.border = "none";
+  prevButton.style.borderRadius = "50%";
+  prevButton.style.cursor = "pointer";
+  prevButton.style.transition = "all 0.3s ease";
+  prevButton.addEventListener("click", () => {
+    if (currentPage > 1) {
+      currentPage--;
+      renderCards(currentProducts);
+    }
+  });
+
+  // Add next page button
+  const nextButton = document.createElement("button");
+  nextButton.innerHTML = "&#8594;"; // Right arrow character (→)
+  nextButton.style.fontSize = "20px";
+  nextButton.style.marginLeft = "10px";
+  nextButton.style.padding = "10px 15px";
+  nextButton.style.fontWeight = "bold";
+  nextButton.style.backgroundColor = "#2D3E50";
+  nextButton.style.color = "#fff";
+  nextButton.style.border = "none";
+  nextButton.style.borderRadius = "50%";
+  nextButton.style.cursor = "pointer";
+  nextButton.style.transition = "all 0.3s ease";
+
+  nextButton.addEventListener("click", () => {
+    if (currentPage < totalPages) {
+      currentPage++;
+      renderCards(currentProducts);
+    }
+  });
+
+  // Add page number buttons
+  for (let page = startPage; page <= endPage; page++) {
+    const pageButton = document.createElement("button");
+    pageButton.textContent = page;
+    pageButton.style.padding = "12px 20px";
+    pageButton.style.fontSize = "16px";
+    pageButton.style.margin = "0 5px";
+    pageButton.style.backgroundColor = "#F1F1F1";
+    pageButton.style.color = "#333";
+    pageButton.style.border = "1px solid #ccc";
+    pageButton.style.borderRadius = "50px";
+    pageButton.style.cursor = "pointer";
+    pageButton.style.transition = "all 0.3s ease";
+
+    // Highlight the active page
+    if (page === currentPage) {
+      pageButton.style.backgroundColor = "#FF6F61";
+      pageButton.style.color = "#fff";
+      pageButton.style.borderColor = "#FF6F61";
+    }
+
+    pageButton.addEventListener("click", () => {
+      currentPage = page;
+      renderCards(currentProducts);
+    });
+
+    pageButton.addEventListener("mouseover", () => {
+      pageButton.style.backgroundColor = "#FF6F61";
+      pageButton.style.color = "#fff";
+      pageButton.style.borderColor = "#FF6F61";
+    });
+
+    pageButton.addEventListener("mouseout", () => {
+      if (page !== currentPage) {
+        pageButton.style.backgroundColor = "#F1F1F1";
+        pageButton.style.color = "#333";
+        pageButton.style.borderColor = "#ccc";
+      }
+    });
+
+    paginationContainer.appendChild(pageButton);
+    
+  }
+
+  // Append previous and next buttons
+  root.appendChild(prevButton);
+  root.appendChild(paginationContainer);
+  root.appendChild(nextButton);
 }
 
 function fetchData() {
@@ -593,6 +728,7 @@ function fetchData() {
 }
 
 function init() {
+  
   fetchData();
 }
 
