@@ -463,6 +463,38 @@ function createCard(item) {
   card.style.overflow = "hidden";
   card.style.width = "18%";
   card.style.minWidth = "250px";
+  card.style.position = "relative";
+  
+  const closeButton = document.createElement("button");
+  closeButton.textContent = "✖";
+  closeButton.style.position = "absolute";
+  closeButton.style.top = "10px";
+  closeButton.style.right = "10px";
+  closeButton.style.backgroundColor = "#ff6f61";
+  closeButton.style.color = "#fff";
+  closeButton.style.border = "none";
+  closeButton.style.borderRadius = "50%";
+  closeButton.style.padding = "5px 10px";
+  closeButton.style.cursor = "pointer";
+  closeButton.style.fontSize = "12px";
+  closeButton.style.fontWeight = "bold";
+  closeButton.style.transition = "background-color 0.3s";
+
+  closeButton.addEventListener("mouseenter", () => {
+    closeButton.style.backgroundColor = "#e55a4e";
+  });
+  closeButton.addEventListener("mouseleave", () => {
+    closeButton.style.backgroundColor = "#ff6f61";
+  });
+
+  closeButton.addEventListener("click", () => {
+    // Remove the item from the array
+    const index = currentProducts.indexOf(item);
+    if (index !== -1) {
+      currentProducts.splice(index, 1);
+      renderCards(currentProducts);
+    }
+  });
 
   // Create and style elements
   const img = document.createElement("img");
@@ -504,6 +536,7 @@ function createCard(item) {
   );
 
   // Append elements to card
+  card.appendChild(closeButton);
   card.appendChild(img);
   card.appendChild(title);
   card.appendChild(price);
@@ -624,24 +657,21 @@ function createPagination(totalPages) {
   paginationContainer.style.display = "flex";
   paginationContainer.style.justifyContent = "center";
   paginationContainer.style.alignItems = "center";
-  paginationContainer.style.gap = "10px"; // Space between buttons
+  paginationContainer.style.gap = "10px";
 
 
   // Calculate the start and end page numbers to display
   let startPage = Math.max(1, currentPage - Math.floor(pagesToShow / 2));
-  console.log("startP" + startPage);
   let endPage = Math.min(totalPages, startPage + pagesToShow - 1);
-  console.log("endP" + endPage);
   // Adjust the range if we are near the start or end
   if (endPage - startPage + 1 < pagesToShow) {
     startPage = Math.max(1, endPage - pagesToShow + 1);
-    console.log(startPage + "strP");
 
   }
 
   // Add previous page button
   const prevButton = document.createElement("button");
-  prevButton.innerHTML = "&#8592;"; // Left arrow character (←)
+  prevButton.innerHTML = "&#8592;"; 
   prevButton.style.fontSize = "20px";
   prevButton.style.marginRight = "10px";
   prevButton.style.padding = "10px 15px";
@@ -661,7 +691,7 @@ function createPagination(totalPages) {
 
   // Add next page button
   const nextButton = document.createElement("button");
-  nextButton.innerHTML = "&#8594;"; // Right arrow character (→)
+  nextButton.innerHTML = "&#8594;";
   nextButton.style.fontSize = "20px";
   nextButton.style.marginLeft = "10px";
   nextButton.style.padding = "10px 15px";
