@@ -1,11 +1,10 @@
 let allProducts = [];
 let currentProducts = [];
-const root = document.querySelector("#root");
 let currentPage = 1 ;
 const productsPerPage = 10;
 const pagesToShow = 3;
 
-
+const root = document.querySelector("#root");
 
 // create the header
 function createHeader() {
@@ -590,8 +589,11 @@ function renderCards(products) {
   filterProcucts(allProducts); // Pass all products for filtering
 
   const startIndex = (currentPage-1) * productsPerPage;
+  console.log("startI" + startIndex);
   const endIndex = startIndex + productsPerPage ;
+  console.log("endI" + endIndex);
   const paginatedProducts = products.slice(startIndex,endIndex); 
+  console.log("paginated" + paginatedProducts);
   
   paginatedProducts.forEach((item) => {
     const card = createCard(item);
@@ -599,14 +601,25 @@ function renderCards(products) {
   });
 
   const totalPages = Math.ceil(products.length / productsPerPage);
+  console.log("tp" + totalPages);
   createPagination(totalPages);
   
 }
 
 // Function to create the page navigation
 function createPagination(totalPages) {
+
+  const container = document.createElement("div");
+  container.style.textAlign = "center";
+  container.style.margin = "20px 0";
+  container.style.display = "flex";
+  container.style.justifyContent = "center";
+  container.style.alignItems = "center";
+  container.style.gap = "10px"; // Space between buttons
+
+
   const paginationContainer = document.createElement("div");
- paginationContainer.style.textAlign = "center";
+  paginationContainer.style.textAlign = "center";
   paginationContainer.style.margin = "20px 0";
   paginationContainer.style.display = "flex";
   paginationContainer.style.justifyContent = "center";
@@ -616,11 +629,14 @@ function createPagination(totalPages) {
 
   // Calculate the start and end page numbers to display
   let startPage = Math.max(1, currentPage - Math.floor(pagesToShow / 2));
+  console.log("startP" + startPage);
   let endPage = Math.min(totalPages, startPage + pagesToShow - 1);
-
+  console.log("endP" + endPage);
   // Adjust the range if we are near the start or end
   if (endPage - startPage + 1 < pagesToShow) {
     startPage = Math.max(1, endPage - pagesToShow + 1);
+    console.log(startPage + "strP");
+
   }
 
   // Add previous page button
@@ -709,9 +725,11 @@ function createPagination(totalPages) {
   }
 
   // Append previous and next buttons
-  root.appendChild(prevButton);
-  root.appendChild(paginationContainer);
-  root.appendChild(nextButton);
+  container.appendChild(prevButton);
+  container.appendChild(paginationContainer);
+  container.appendChild(nextButton);
+
+  root.appendChild(container);
 }
 
 function fetchData() {
